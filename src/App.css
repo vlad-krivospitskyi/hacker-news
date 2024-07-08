@@ -1,0 +1,45 @@
+.App {
+  margin: 20px;
+  text-align: center;
+}
+
+.text-2xl.font-bold {
+  color: #e4e3e3;
+  margin: 30px;
+  font-size: 40px;
+}
+.bg-white.shadow-md.rounded-lg {
+  margin: 30px auto;
+  background-color: #0d4381;
+  border: 2px solid #e4e3e3;
+  border-radius: 10px;
+}
+.text-sm.text-white {
+  color: #e4e3e3;
+  font-weight: 500;
+}
+
+.text-xl.font-bold.text-blue-600 {
+  font-size: 18px;
+  color: #e4e3e3;
+}
+
+.backBtn {
+  color: #fff;
+  padding: 5px 10px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+.btn {
+  margin-top: 15px;
+  color: #fff;
+  padding: 5px 20px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.container.mx-auto.p-4 {
+  margin: auto auto;
+}

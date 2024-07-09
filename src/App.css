@@ -43,3 +43,33 @@
 .container.mx-auto.p-4 {
   margin: auto auto;
 }
+
+.ml-4.mt-2 {
+  padding: 10px 5px;
+  margin: 0 auto 30px;
+  max-width: 40vw;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+.btn:hover,
+.btn:focus {
+  transform: scale(1.02);
+  -webkit-box-shadow: 10px 12px 30px -4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 10px 12px 30px -4px rgba(0, 0, 0, 0.4);
+  box-shadow: 10px 12px 30px -4px rgba(0, 0, 0, 0.4);
+}
+
+.close-btn {
+  padding: 0 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #fff;
+}
+.close-btn:hover,
+.close-btn:focus {
+  color: #fff !important;
+  font-size: 1.1rem;
+  transform: scale(1.02);
+}

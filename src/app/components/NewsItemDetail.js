@@ -11,6 +11,7 @@ const NewsItemDetail = () => {
   const [comments, setComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
   const [isCommentsCollapsed, setIsCommentsCollapsed] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -26,6 +27,8 @@ const NewsItemDetail = () => {
         }
       } catch (error) {
         console.error('Error fetching news item:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -69,6 +72,14 @@ const NewsItemDetail = () => {
     return [];
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   if (!news) {
     return null;
   }
@@ -78,7 +89,13 @@ const NewsItemDetail = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300 relative">
+        <button
+          className="close-btn absolute top-2 right-2 hover:text-gray-900"
+          onClick={() => window.history.back()}
+        >
+          &times;
+        </button>
         <div className="header-text flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-center w-full">{title}</h1>
         </div>

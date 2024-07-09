@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setTopStories } from '../reducers/newsReducer';
+import { setTopStories, appendTopStories } from '../reducers/newsReducer';
 import axios from 'axios';
 
 export const fetchNestedComments = createAsyncThunk(
@@ -42,5 +42,20 @@ export const fetchNewsItemThunk = (id) => async (dispatch) => {
   } catch (error) {
     console.error('Error fetching news item:', error);
     return null;
+  }
+};
+
+export const loadMoreStoriesThunk = (currentPage) => async (dispatch) => {
+  try {
+    const response = await axios.get(
+      'https://hacker-news.firebaseio.com/v0/topstories.json'
+    );
+    dispatch(
+      appendTopStories(
+        response.data.slice(20 * currentPage, 20 * (currentPage + 1))
+      )
+    );
+  } catch (error) {
+    console.error('Error loading more stories:', error);
   }
 };

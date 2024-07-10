@@ -15,7 +15,7 @@ export const fetchNewsById = async (id) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching news item:', error);
+    console.error('Error', error);
     throw error;
   }
 };
@@ -27,7 +27,7 @@ export const fetchCommentById = async (commentId) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching comment:', error);
+    console.error('Error', error);
     throw error;
   }
 };
@@ -49,7 +49,7 @@ export const fetchNestedComments = async (commentId) => {
       return nestedComments;
     }
   } catch (error) {
-    console.error('Error fetching nested comments:', error);
+    console.error('Error', error);
     throw error;
   }
   return [];

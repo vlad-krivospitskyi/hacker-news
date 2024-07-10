@@ -27,7 +27,7 @@ const NewsItemDetail = () => {
           fetchComments(data.kids);
         }
       } catch (error) {
-        console.error('Error fetching news item:', error);
+        console.error('Error', error);
       } finally {
         setLoading(false);
       }
@@ -45,7 +45,7 @@ const NewsItemDetail = () => {
       const commentsData = await Promise.all(commentPromises);
       setComments(commentsData);
     } catch (error) {
-      console.error('Error fetching comments:', error);
+      console.error('Error', error);
     }
   };
 
@@ -54,7 +54,7 @@ const NewsItemDetail = () => {
       const nestedComments = await fetchNestedComments(commentId);
       return nestedComments;
     } catch (error) {
-      console.error('Error fetching nested comments:', error);
+      console.error('Error', error);
       return [];
     }
   };

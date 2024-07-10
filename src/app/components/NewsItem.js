@@ -13,7 +13,7 @@ const NewsItem = ({ id }) => {
         const newsData = await dispatch(fetchNewsItemThunk(id));
         setNews(newsData);
       } catch (error) {
-        console.error('Error fetching news item:', error);
+        console.error('Error', error);
       }
     };
 

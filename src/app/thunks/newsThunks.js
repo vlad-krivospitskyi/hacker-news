@@ -29,7 +29,7 @@ export const fetchTopStoriesThunk = () => async (dispatch) => {
     );
     dispatch(setTopStories(response.data.slice(0, 20)));
   } catch (error) {
-    console.error('Error fetching top stories:', error);
+    console.error('Error', error);
   }
 };
 
@@ -40,7 +40,7 @@ export const fetchNewsItemThunk = (id) => async (dispatch) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching news item:', error);
+    console.error('Error', error);
     return null;
   }
 };
@@ -56,6 +56,6 @@ export const loadMoreStoriesThunk = (currentPage) => async (dispatch) => {
       )
     );
   } catch (error) {
-    console.error('Error loading more stories:', error);
+    console.error('Error', error);
   }
 };

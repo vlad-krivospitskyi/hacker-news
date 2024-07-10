@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { setCurrentNews } from '../reducers/newsReducer';
+import {
+  fetchNewsById,
+  fetchCommentById,
+  fetchNestedComments,
+} from '../../store/store';
 
 const NewsItemDetail = () => {
   const dispatch = useDispatch();
@@ -16,10 +20,7 @@ const NewsItemDetail = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(
-          `https://hacker-news.firebaseio.com/v0/item/${id}.json`
-        );
-        const data = response.data;
+        const data = await fetchNewsById(id);
         dispatch(setCurrentNews(data));
         if (data.kids) {
           setCommentCount(data.kids.length);
@@ -38,10 +39,8 @@ const NewsItemDetail = () => {
   const fetchComments = async (commentIds) => {
     try {
       const commentPromises = commentIds.map(async (commentId) => {
-        const response = await axios.get(
-          `https://hacker-news.firebaseio.com/v0/item/${commentId}.json`
-        );
-        return response.data;
+        const comment = await fetchCommentById(commentId);
+        return comment;
       });
       const commentsData = await Promise.all(commentPromises);
       setComments(commentsData);
@@ -50,26 +49,14 @@ const NewsItemDetail = () => {
     }
   };
 
-  const fetchNestedComments = async (commentId) => {
+  const fetchNestedCommentsWrapper = async (commentId) => {
     try {
-      const response = await axios.get(
-        `https://hacker-news.firebaseio.com/v0/item/${commentId}.json`
-      );
-      const data = response.data;
-      if (data.kids) {
-        const nestedCommentPromises = data.kids.map(async (nestedCommentId) => {
-          const nestedResponse = await axios.get(
-            `https://hacker-news.firebaseio.com/v0/item/${nestedCommentId}.json`
-          );
-          return nestedResponse.data;
-        });
-        const nestedComments = await Promise.all(nestedCommentPromises);
-        return nestedComments;
-      }
+      const nestedComments = await fetchNestedComments(commentId);
+      return nestedComments;
     } catch (error) {
       console.error('Error fetching nested comments:', error);
+      return [];
     }
-    return [];
   };
 
   if (loading) {
@@ -99,16 +86,16 @@ const NewsItemDetail = () => {
         <div className="header-text flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-center w-full">{title}</h1>
         </div>
-        <p className="text-base text-white">Автор: {by}</p>
-        <p className="text-base text-white">Дата публикации: {date}</p>
+        <p className="author text-base text-gray-600">Автор: {by}</p>
+        <p className="text-base text-gray-600">Дата публикации: {date}</p>
         <a href={url} className="text-blue-500 underline">
           Ссылка на новость
         </a>
-        <p className="text-base text-white mt-4">
+        <p className="text-base text-gray-600 mt-4">
           Количество комментариев: {commentCount}
         </p>
         <button
-          className="text-white underline"
+          className="text-blue-500 underline"
           onClick={() => setIsCommentsCollapsed(!isCommentsCollapsed)}
         >
           {isCommentsCollapsed
@@ -121,7 +108,7 @@ const NewsItemDetail = () => {
               <Comment
                 key={comment.id}
                 comment={comment}
-                fetchNestedComments={fetchNestedComments}
+                fetchNestedComments={fetchNestedCommentsWrapper}
               />
             ))}
         </div>
@@ -160,13 +147,16 @@ const Comment = ({ comment, fetchNestedComments }) => {
 
   return (
     <div className="ml-4 mt-2">
-      <p className="text-base text-white">{comment.by}</p>
+      <p className="text-base text-gray-600">{comment.by}</p>
       <p
-        className="text-base text-white"
+        className="text-base text-gray-600"
         dangerouslySetInnerHTML={{ __html: comment.text }}
       ></p>
       {comment.kids && (
-        <button className="text-white underline" onClick={loadNestedComments}>
+        <button
+          className="text-blue-500 underline"
+          onClick={loadNestedComments}
+        >
           {isCollapsed
             ? 'Показать вложенные комментарии'
             : 'Свернуть вложенные комментарии'}

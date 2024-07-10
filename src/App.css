@@ -52,9 +52,9 @@
   border-radius: 10px;
 }
 
+.text-blue-500.underline:hover,
 .btn:hover,
 .btn:focus {
-  transform: scale(1.02);
   -webkit-box-shadow: 10px 12px 30px -4px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 10px 12px 30px -4px rgba(0, 0, 0, 0.4);
   box-shadow: 10px 12px 30px -4px rgba(0, 0, 0, 0.4);
@@ -70,6 +70,6 @@
 .close-btn:hover,
 .close-btn:focus {
   color: #fff !important;
-  font-size: 1.1rem;
+  font-size: 1.02rem;
   transform: scale(1.02);
 }

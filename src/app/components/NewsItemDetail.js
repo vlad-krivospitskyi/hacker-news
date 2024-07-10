@@ -95,8 +95,13 @@ const NewsItemDetail = () => {
           Количество комментариев: {commentCount}
         </p>
         <button
-          className="text-blue-500 underline"
-          onClick={() => setIsCommentsCollapsed(!isCommentsCollapsed)}
+          className={`text-blue-500 underline ${
+            commentCount === 0 ? 'cursor-not-allowed opacity-50' : ''
+          }`}
+          onClick={() =>
+            commentCount > 0 && setIsCommentsCollapsed(!isCommentsCollapsed)
+          }
+          disabled={commentCount === 0}
         >
           {isCommentsCollapsed
             ? 'Показать комментарии'
